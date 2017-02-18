@@ -1,0 +1,31 @@
+{
+  "name": "nixie-clock",
+  "version": "1.0.0",
+  "description": "Nixie Clock for GPIO",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/industral/nixie-clock.git"
+  },
+  "keywords": [
+    "nixie",
+    "clock",
+    "gpio"
+  ],
+  "author": "Alex Ivasyuv",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/industral/nixie-clock/issues"
+  },
+  "homepage": "https://github.com/industral/nixie-clock#readme",
+  "dependencies": {
+    "onoff": "^1.1.2"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^3.2.0"
+  }
+}
