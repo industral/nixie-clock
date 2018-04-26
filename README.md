@@ -7,15 +7,37 @@ Clock software for any GPIO device for the following [schematic](https://easyeda
 
 ### Developing
 
-On working machine share you folder via SMB (on macOS it's Preferences -> Sharing -> File Sharing).
-On **Raspberry Pi** mount that folder 
+On working machine share you folder via SMB.
 
-`sudo mount -t cifs //YOUR_IP/YOUR_PATH /mnt -o user=YOUR_USER,uid=R_UID,gid=R_GID`
+On macOS it's `Preferences -> Sharing -> File Sharing`. 
+Select folder, and in `Options` select `SMB` and enable your account. Enter password.
 
-Where, **YOUR_USER** user on dev machine and **R_UID** and **R_GID** it's Raspberry Pi uid and gid.
-You can find them via `id -u YOUR_USERNAME` and `id -g YOUR_USERNAME`
+
+On **Raspberry Pi** mount that folder :
+
+
+```
+sudo mount -t cifs //YOUR_IP/YOUR_PATH /mnt -o user=YOUR_USER,uid=$(id -u `whoami`),gid=$(id -g `whoami`)
+```
+
+for example:
+
+
+```
+sudo mount -t cifs //192.168.0.14/nixie-clock /mnt -o user=alex,uid=$(id -u `whoami`),gid=$(id -g `whoami`)
+```
+
+
+Where, **YOUR_USER** is a user on dev machine.
+
 
 You can install all npm modules directly on dev machine, then just remove from `node_modules/epoll`
 and reinstall on Raspberry Pi via `npm i epoll`
 
+
 Test on Raspberry Pi can be run via `./node_modules/mocha/bin/mocha`
+
+
+sudo timedatectl set-ntp True
+sudo dpkg-reconfigure tzdata
+

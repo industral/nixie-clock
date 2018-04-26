@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/industral/nixie-clock#readme",
   "dependencies": {
-    "onoff": "^1.1.2"
+    "onoff": "^3.0.2"
   },
   "devDependencies": {
     "expect.js": "^0.3.1",

@@ -10,7 +10,7 @@ let isSetup = false;
 const time = new Time();
 const alarm = new Alarm();
 
-time.start(new Date());
+time.start(() => new Date());
 
 GPIO.B1_SETUP.watch((err) => {
   if (err) throw err;
@@ -23,4 +23,11 @@ GPIO.B1_SETUP.watch((err) => {
   }
 
   return alarm.leaveSetup();
+});
+
+process.on('SIGINT', () => {
+  time.stop();
+  process.exit();
+
+  //TODO: add unexport
 });

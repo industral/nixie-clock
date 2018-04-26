@@ -10,7 +10,7 @@ class Alarm {
     this.time = time;
 
     this.clockSettings = require('./clock-settings');
-    this.isEnable = B4_ALARM.readSync();
+    this.isEnable = GPIO.B4_ALARM.readSync();
 
     GPIO.B4_ALARM.watch((err, value) => {
       if (err) throw err;
@@ -23,14 +23,13 @@ class Alarm {
     this.time.startBlink();
 
     this.clockSettings = require('./clock-settings');
-    const d = this._getDate(this.clockSettings.hh, this.clockSettings.mm);
-
-    this.time.start(d);
+    this.time.start(() => this._getDate(this.clockSettings.hh, this.clockSettings.mm));
   }
 
   leaveSetup() {
     this.removeListeners();
     fs.write('./clock-settings', JSON.stringify(this.clockSettings), this.time.stopBlink.bind(this));
+    this.time.start(() => new Date());
   }
 
   isAlarmEnabled() {

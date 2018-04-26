@@ -22,41 +22,84 @@ class Time {
   }
 
   updateTime(tubeNumber, timeNumbers, numberPart) {
-    // needed to blink functionality. Set to 0, means Y0 is active. And we start tubes from Y1.
-    GPIO.DS1.writeSync(0);
-    GPIO.DS2.writeSync(0);
-    GPIO.DS3.writeSync(0);
+    return new Promise((resolve, reject) => {
+      // needed to blink functionality. Set to 0, means Y0 is active. And we start tubes from Y1.
 
-    if (isBlink) return;
 
-    const timeNumber = Number(String(timeNumbers)[numberPart]);
+      if (isBlink) return;
 
-    GPIO.D1.writeSync(getValue(timeNumber, 1));
-    GPIO.D2.writeSync(getValue(timeNumber, 2));
-    GPIO.D3.writeSync(getValue(timeNumber, 4));
-    GPIO.D4.writeSync(getValue(timeNumber, 8));
+      const timeNumber = utils.fixMyWrongFootPrint(Number(String(timeNumbers)[numberPart]));
 
-    GPIO.DS1.writeSync(getValue(tubeNumber, 1));
-    GPIO.DS2.writeSync(getValue(tubeNumber, 2));
-    GPIO.DS3.writeSync(getValue(tubeNumber, 4));
+      // GPIO.DS1.writeSync(0);
+      // GPIO.DS2.writeSync(0);
+      // GPIO.DS3.writeSync(0);
+
+      GPIO.D1.writeSync(getValue(timeNumber, 1));
+      GPIO.D2.writeSync(getValue(timeNumber, 2));
+      GPIO.D3.writeSync(getValue(timeNumber, 4));
+      GPIO.D4.writeSync(getValue(timeNumber, 8));
+
+      GPIO.DS1.writeSync(getValue(tubeNumber, 1));
+      GPIO.DS2.writeSync(getValue(tubeNumber, 2));
+      GPIO.DS3.writeSync(getValue(tubeNumber, 4));
+
+      // resolve();
+      setTimeout(() => {
+        resolve();
+      }, 3);
+    });
   }
 
-  showTime(date) {
-    const time = utils.getTime(date);
+  async showTime(dateFn) {
+    const time = utils.getTime(dateFn());
 
-    this.updateTime(1, time.hh, 0);
-    this.updateTime(2, time.hh, 1);
+    try {
+      await this.updateTime(1, time.hh, 0);
+      await this.updateTime(2, time.hh, 1);
 
-    this.updateTime(3, time.mm, 0);
-    this.updateTime(4, time.mm, 1);
+      await this.updateTime(3, time.mm, 0);
+      await this.updateTime(4, time.mm, 1);
 
-    this.updateTime(5, time.ss, 0);
-    this.updateTime(6, time.ss, 1);
+      await this.updateTime(5, time.ss, 0);
+      await this.updateTime(6, time.ss, 1);
+
+      // process.nextTick(() => {
+        this.showTime(dateFn);
+      // });
+
+    } catch(error) {
+      console.error(error);
+    }
+    // setTimeout(() => {this.showTime(dateFn)}, 2);
   }
 
-  start(date) {
-    const showTime = this.showTime.bind(this);
-    this.t = setInterval(showTime(date), 1000);
+  async start(dateFn) {
+    this.stop();
+
+    const showTime = this.showTime.bind(this, dateFn);
+    showTime();
+
+    //
+    //
+    //  const r = () => {
+    //    await this.showTime();
+    //   await r();
+    // }
+    //
+    // r();
+
+    // let result = r();
+    // if (result)
+
+
+    // let r =
+    // if (r)
+
+    // let r = true;
+    // while (r) {
+    //
+    // }
+    // this.t = setInterval(showTime, 10);
   }
 
   startBlink() {
@@ -71,6 +114,10 @@ class Time {
 
   stop() {
     clearInterval(this.t);
+
+    GPIO.DS1.writeSync(0);
+    GPIO.DS2.writeSync(0);
+    GPIO.DS3.writeSync(0);
   }
 }
 

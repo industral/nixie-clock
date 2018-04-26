@@ -18,8 +18,23 @@ const getDate = (hh, mm, d = new Date()) => {
   return d;
 };
 
+const fixMyWrongFootPrint = (number) => {
+  return {
+    1: 0,
+    2: 9,
+    3: 8,
+    4: 7,
+    5: 6,
+    6: 5,
+    7: 4,
+    8: 3,
+    9: 2
+  }[number];
+};
+
 module.exports = {
   getValueByWeight: getValueByWeight,
   getTime: getTime,
-  getDate: getDate
+  getDate: getDate,
+  fixMyWrongFootPrint: fixMyWrongFootPrint
 };
