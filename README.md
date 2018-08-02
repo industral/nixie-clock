@@ -1,43 +1,48 @@
 # Nixie Clock
 
-Clock software for any GPIO device for the following [schematic](https://easyeda.com/industral/Nixie_Clock-a5c03f6d59a54d3baa4bdf06cb338afd)
+![Nixie Clock](./docs/devices/v3-01.jpg)
 
-![Schematic](https://easyeda.com/normal/Schematic-182156bbd35f40678ec455371977dfc3)
+Nixie Clock controlled by I²C.
 
+Project consist from 2 parts:
 
-### Developing
+* Hardware ([PCB](https://en.wikipedia.org/wiki/Printed_circuit_board) + any [I²C](https://en.wikipedia.org/wiki/I%C2%B2C) control device)
+* Software
 
-On working machine share you folder via SMB.
+Once creating PCB, you can control your Nixie Clock by any I²C device. Here you can find software to control Nixie Clock by different types I²C devices.
 
-On macOS it's `Preferences -> Sharing -> File Sharing`. 
-Select folder, and in `Options` select `SMB` and enable your account. Enter password.
+## Hardware
 
+Hardware part consist from 2 parts:
 
-On **Raspberry Pi** mount that folder :
+* [Custom PCB](#custom-pcb)
+* [I²C Device](#i2c-device)
 
+### Custom PCB
 
-```
-sudo mount -t cifs //YOUR_IP/YOUR_PATH /mnt -o user=YOUR_USER,uid=$(id -u `whoami`),gid=$(id -g `whoami`)
-```
+Custom PCB contains all required drivers and [Nixie Tubes](https://en.wikipedia.org/wiki/Nixie_tube), in other words - your clock.
 
-for example:
+Project within Schematic and PCB is located [here](https://easyeda.com/industral/nixie-clock)
 
+**Schematic**
 
-```
-sudo mount -t cifs //192.168.0.14/nixie-clock /mnt -o user=alex,uid=$(id -u `whoami`),gid=$(id -g `whoami`)
-```
+![Schematic](https://image.easyeda.com/histories/4454b862059941f5861759a11c864cd6.png) 
 
+**PCB**
 
-Where, **YOUR_USER** is a user on dev machine.
-
-
-You can install all npm modules directly on dev machine, then just remove from `node_modules/epoll`
-and reinstall on Raspberry Pi via `npm i epoll`
+![PCB](https://image.easyeda.com/histories/7d0d982b83ac46778a668b8487154d97.png)
 
 
-Test on Raspberry Pi can be run via `./node_modules/mocha/bin/mocha`
+### I2C Device
 
+Any device that has I²C support (usually has [GPIO](https://en.wikipedia.org/wiki/General-purpose_input/output)).
+You can use any [SBC](https://en.wikipedia.org/wiki/Single-board_computer) like [Raspberry Pi](https://en.wikipedia.org/wiki/Raspberry_Pi), [Banana Pi](https://en.wikipedia.org/wiki/Banana_Pi) and others or use [single-bord microcontroller](https://en.wikipedia.org/wiki/Single-board_microcontroller) like [Arduino](https://en.wikipedia.org/wiki/Arduino), or even use your own developed board within microcontroller for I²C communication.
 
-sudo timedatectl set-ntp True
-sudo dpkg-reconfigure tzdata
+  
+## Software
 
+If you use SBC that has [OS](https://en.wikipedia.org/wiki/Operating_system) running on, e.g. Linux, and has I²C - you can use software located [here on GitHub](https://github.com/industral/nixie-clock).
+You have to upload it into your chosen I²C device, build it and run it.
+Using custom I²C device - will require to write your own code in order to control clock via I²C.
+
+For other documentation, please refer to [Documentation](./docs)

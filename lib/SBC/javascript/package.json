@@ -1,10 +1,10 @@
 {
   "name": "nixie-clock",
-  "version": "1.0.0",
-  "description": "Nixie Clock for GPIO",
+  "version": "3.0.0",
+  "description": "Nixie Clock for I2C",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "run": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -13,7 +13,9 @@
   "keywords": [
     "nixie",
     "clock",
-    "gpio"
+    "i2c",
+    "sn74141",
+    "mcp23017"
   ],
   "author": "Alex Ivasyuv",
   "license": "MIT",
@@ -22,10 +24,6 @@
   },
   "homepage": "https://github.com/industral/nixie-clock#readme",
   "dependencies": {
-    "onoff": "^3.0.2"
-  },
-  "devDependencies": {
-    "expect.js": "^0.3.1",
-    "mocha": "^3.2.0"
+    "i2c-bus": "^3.2.0"
   }
 }
