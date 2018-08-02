@@ -1,11 +1,15 @@
 # Nixie Clock
 
-Nixie Clock controlling via I²C bus.
+![Nixie Clock](./docs/devices/v3-01.jpg)
+
+Nixie Clock controlled by I²C.
 
 Project consist from 2 parts:
 
 * Hardware ([PCB](https://en.wikipedia.org/wiki/Printed_circuit_board) + any [I²C](https://en.wikipedia.org/wiki/I%C2%B2C) control device)
-* Software (currently only for [SBC](https://en.wikipedia.org/wiki/Single-board_computer))
+* Software
+
+Once creating PCB, you can control your Nixie Clock by any I²C device. Here you can find software to control Nixie Clock by different types I²C devices.
 
 ## Hardware
 
@@ -21,10 +25,10 @@ Custom PCB contains all required drivers and [Nixie Tubes](https://en.wikipedia.
 Project within Schematic and PCB is located [here](https://easyeda.com/industral/nixie-clock)
 
 **Schematic**
-![Schematic](https://image.easyeda.com/histories/ebf0ae74b1e647679ec340c16ef4df52.png) 
+![Schematic](https://image.easyeda.com/histories/4454b862059941f5861759a11c864cd6.png) 
 
 **PCB**
-![PCB](https://image.easyeda.com/histories/0508fdebd4ff43b789647696a5a8f821.png)
+![PCB](https://image.easyeda.com/histories/7d0d982b83ac46778a668b8487154d97.png)
 
 
 ### I2C Device
@@ -39,39 +43,4 @@ If you use SBC that has [OS](https://en.wikipedia.org/wiki/Operating_system) run
 You have to upload it into your chosen I²C device, build it and run it.
 Using custom I²C device - will require to write your own code in order to control clock via I²C.
 
-### Developing
-
-On working machine share you folder via SMB.
-
-On macOS it's `Preferences -> Sharing -> File Sharing`. 
-Select folder, and in `Options` select `SMB` and enable your account. Enter password.
-
-
-On **Raspberry Pi** mount that folder :
-
-
-```
-sudo mount -t cifs //YOUR_IP/YOUR_PATH /mnt -o user=YOUR_USER,uid=$(id -u `whoami`),gid=$(id -g `whoami`)
-```
-
-for example:
-
-
-```
-sudo mount -t cifs //192.168.0.200/nixie-clock /mnt -o user=alex,uid=$(id -u `whoami`),gid=$(id -g `whoami`)
-```
-
-
-Where, **YOUR_USER** is a user on dev machine.
-
-
-You can install all npm modules directly on dev machine, then just remove from `node_modules/epoll`
-and reinstall on Raspberry Pi via `npm i epoll`
-
-
-Test on Raspberry Pi can be run via `./node_modules/mocha/bin/mocha`
-
-
-sudo timedatectl set-ntp True
-sudo dpkg-reconfigure tzdata
-
+For other documentation, please refer to [Documentation](./docs)

@@ -1,3 +1,16 @@
+## [3.0.0] - 2018-08-01
+More simplified version of Nixie Clock within fixes.
+
+### Added
+- LED brightness control
+- Individual Nixie Tube brightness control
+- code on C
+
+### Changed
+- I2C expander. Now it's in DIP, much easier to soldering
+- fixed Nixie Tube layout
+- fixed Arduino code
+
 ## [2.0.0] - 2018-07-02
 v1.0.0 is deprecated. GPIO switching was replaced with I2C.
 
